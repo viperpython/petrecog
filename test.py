@@ -19,7 +19,7 @@ test_data = test_data.map(format_image).batch(batch_size)
 loaded_model = tf.keras.models.load_model('cats_vs_dogs.h5')
 # test_loss, test_accuracy = loaded_model.evaluate(test_data)
 # print('Test accuracy:', test_accuracy)
-for image, label in test_data.take(5):  # Loop through images and labels
+for image, label in test_data.take(1):  # Loop through images and labels
     prediction = loaded_model.predict(image)
     
     plt.figure(figsize=(150, 150))
@@ -45,7 +45,10 @@ for image, label in test_data.take(5):  # Loop through images and labels
             wrong+=1
         class_name = 'dog' if predicted_class == 1 else 'cat'
         plt.title(class_name, color=color)
-    print("correctly predicted:",correct)
-    print("wrongly predicted:",wrong)
-    print("accuracy:",correct/32)
+    text = f"Correct: {correct}\nWrong: {wrong}\nAccuracy: {correct/32:.2f}"
+    plt.text(0.5, -0.4, text, color='black', transform=plt.gca().transAxes,
+                ha='center', va='center', bbox=dict(facecolor='white', alpha=0.7))
+    # print("correctly predicted:",correct)
+    # print("wrongly predicted:",wrong)
+    # print("accuracy:",correct/32)
     plt.show()
